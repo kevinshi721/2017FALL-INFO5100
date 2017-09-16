@@ -1,0 +1,406 @@
+1. Hiking
+ 1.1. Rent a ReachNow to drive to mountain rainier on weekends with friends
+ 1.2. On the way, fill the gas
+ 1.3. On the way, eat at restaurant for lunch
+ 1.4. Buy the ticket to get into the park
+ 1.5. Book a hotel or check in the hotel.
+
+ Things
+
+ 	Person
+ 		Data : username, password, reachNowAccout, searchRange, currentLocation, seatAmount, creditCard, phone, ticketAmount, roomAmount,  
+ 		Behavior : login, register, search, rent, drive, park, fill, feel, eat, buy, enter, call, wait
+
+ 	InternetCarRentService
+ 		Data : availabeCar, rent
+ 		Behavior : authorize, record, calculate
+
+ 	Car
+ 		Data : gasAmount, gasAlart, startTime, endTime, startLocation, endLoacation, insufficientGas, sufficientGas
+ 		Behavior : check, alert
+
+
+ 	GasStation
+ 		Data : gasLocation, gas
+ 		Behavior : sellGas
+
+ 	Restaurant
+ 		Data : resLocation, food
+ 		Behavior : sellfood
+
+ 	Park
+ 		Data : ticket, parkingArea, parkTicketing, parkGate
+ 		Behavior : sellTicket
+
+ 	Hotel
+ 		Data : hotelName, hotelNumber, reception
+ 		Behavior : call, search, book
+
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+1.1. Rent a ReachNow to drive to mountain rainier on weekends with friends
+
+
+	Person kevin
+	InternetCarRentService reachNow
+	Car bmw
+
+	
+	loop
+		kevin.login -> username, password, reachNOW : authroized
+		
+		if authroized = true
+			
+			loop
+				searchRange ==3
+				kevin.search -> currentLocation, searchRange, seatAmount, reachNow : availableCar
+				
+				if availableCar > 0
+					kevin.rent -> availableCar, reachNow : car
+					bmw = car
+					kevin.drive -> bmw
+					reachNow.record -> starTime, starlocation : rentStart
+					break
+					
+				else
+					searchRange == searchRange + 1
+				end
+			end
+
+			break
+				
+		else
+			kevin.register -> reachNow, username, password : reachNowAccount
+		end
+	
+	end
+
+	
+1.2. On the way, fill the gas
+	
+	Person kevin
+	Car bmw
+	GasStation gasStation
+
+	
+	loop
+		car.check -> gasAmount
+		
+		if gasAmount < 50
+			Car.alert -> person : kevin
+			kevin.drive -> gasLocation, car
+			kevin.fill -> gas, creditCard : gasAmount
+			gasAmount == 100
+			kevin.drive -> car, destination
+			break
+		
+		else	
+			Car.Alert = null
+		end
+	end
+
+
+1.3. On the way, eat at restaurant for lunch
+	
+	Person kevin
+	Person [] friends
+	Car bmw
+	Restaurant subway
+
+
+	kevin.drive -> resLocation, car
+
+	loop	
+		kevin.buy -> creditCard, food : enough
+		
+		if enough = true
+			kevin.drive -> car, destination
+			break
+	
+		end
+	end
+
+
+1.4. Buy the ticket to get into the park
+
+	Person kevin
+	Person [] friends
+	Car bmw
+	Park mountRainier
+
+	kevin.park -> parkingArea, bmw
+	
+	ReachNow.calculate-> startTime, endTime, startLocation, endLocation : rent
+	kevin.pay -> rent, creditCard
+
+	kevin.buy -> parkTicketing, ticketAmount, creditCard : tickets
+	kevin.enter -> parkGate, tickets, friends
+	end
+
+
+1.5. Book a hotel or check in the hotel.
+	
+	Person kevin&friend
+	Hotel hilton
+
+	loop
+		kevin.call -> hotelNumber, hotel -> response
+		
+		if response = true
+			kevin.book -> roomAmount, reception : room
+			break
+
+		else
+			kevin.wait -> 5 minutes
+		end
+	end
+
+
+2. Organise a career fair(Suppose you are the organiser)
+ 2.1. Set a data
+ 2.2. Book a venue
+ 2.3. Send invitation to companies
+ 2.4. Setup Vanue
+ 2.5. Career fiar start
+ 2.6. Send satisfaction survey to companies
+
+Things
+
+	Organizor
+		Data : name, phoneNumber, available, recordCompanies
+		Behaviors : set, call, book, invite, check, setup
+
+	Carrer Fair
+		Data : fairDate, fairVenue, weekdays, ready, volunteer, nextCF
+		Behaviors : open
+
+	Leasing Campany
+		Data : name, leasingNumber, invitation
+		Behaviors : lease, 
+
+	Companies
+		Data : names, emailAddress, receivers, attend, participantAmount, boothNumber, infocollected
+		Behavior : come, check, check
+
+	Venue
+		Data : capacity, location, light, booth, rent
+		Behavior : 
+
+	Satisfaction Survery
+		Data : question, scales
+		Behavior : 
+
+
+Sequence of Flow - Invoke Objects with Behaviors
+	Organizor john
+	Leasing Company pnp
+	Carrer Fair neuCF
+	Companiese companies
+	Satisfaction Survey satisSurvey
+
+
+ 2.1. Set a data
+
+	john.set -> month, day, year, weekdays : fairDate
+	
+
+ 2.2. Book a venue
+
+	Loop
+		john.call -> pnp,leasingNumber, phone : response
+			
+		if response = true
+			john.book -> capacity, location, light, rent : fairVenue
+			break
+
+		else
+			John.wait -> 5 minutes
+		end
+	end
+
+ 2.3. Send invitation to companies
+ 2.4. Setup Vanue
+ 2.5. Career fiar start
+ 2.6. Send satisfaction survey to companies
+
+	john.send -> emailAddress, receivers, invitaion, participentAmount
+	companies.reply -> john, participentAmount : attend 
+	
+	if attend = true
+		john.check -> particiopentamount, capacity, booth : availablility
+		
+		if availability = true
+			john.reply -> boothNumber, companies : recordCompanies
+		
+		else
+			john.reply -> "Sorry, It's too late"
+		end
+
+	else
+		john.reply -> "Thanks for your reply"
+	end
+
+ 2.4. Setup Vanue
+
+	john.setupVenue -> venue, volunteer, balloon, food, drink : ready
+
+ 2.5. Career fiar start
+
+	neuCF.start -> fiarDate, fairVenue, volunteer
+
+ 2.6. Send satisfaction survey to companies
+
+	john.send -> satisSurvey, recordCompanies : infoCollected
+		if infoCollected = positive
+			john.keep -> infoCollect, nextCF 
+		else
+			john.improve -> infoCollect, nextCF
+		end
+	end
+
+
+3. Order Pizza from Pizza Hut
+ 3.1. login PizzaHut app
+ 3.2. set deliver location
+ 3.3. choose pizza (dough, topping, cheese, sauce size)
+ 3.4. pay by credit card
+ 3.5. order confirmation
+
+
+Things
+	
+	Person
+		Data : username, password, creditCard, address
+		Behavior : login, fill, choose, pay, register
+
+	PizzaHouse
+		Data : name, website, nearestStore, products, order, carrier, due, deliverInfo, account
+		Behavior : login, Authroize, deliver
+
+	Pizza:
+		Data : size, dough, topping, cheese, sauce, size
+
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+	Person rita
+	PizzaHouse pizzaHut
+	Pizza ritaPizza
+
+	Loop
+
+		rita.login -> website, username, password : authroize
+		
+		if authroize = true
+			rita.fill -> website, address : nearestStore
+			rita.choose -> nearestStore, size, dough, topping, cheese, sauce : ritaPizza
+			rita.purchase -> ritaPizza, creditCard, website : orderConfirmation
+			pizzaHut.deliver -> carrier, address, due : deliverInfo
+			break
+		end
+
+		else
+			rita.register -> website, username, password : account
+		end
+
+	end
+
+
+4. Design a code sharing platform (eg: Github).
+ 4.1. Sign in platform
+ 4.2. Create repository
+ 4.3. Upload files
+ 4.4. Clone repository
+
+Things
+
+	Person
+		Data : username, password, account, file
+		Behavior : signUp, logIn, create, clone, upload
+
+	Platform
+		Data : url, desktopApp
+		Behavior : authorize 
+
+	Repository
+		Data : reposName, download, readMe, ssh, repositoryCloned, fileUploaded
+		Behavior : receive
+
+	
+Sequence of Flow - Invoke Objects with Behaviors
+
+Person kevin
+Platform github
+Repository kr
+
+loop
+	kevin.login -> account, platform : authorized
+
+	if authorized = true
+		kevin.create -> reposName, readMe, platform : repository
+		kr = repository
+		kevin.copy -> ssh
+		kevin.paste -> ssh, desktopApp : repositoryCloned
+		kevin.upload ->  file, repositoryCloned 
+		kr.recive -> file : fileUploaded
+		break
+	
+	else
+		kevin.signUp -> username, password, platform : account
+	end
+end
+
+
+5. Design a soft-drink/snacks vending machine.
+
+Things
+	
+	Person
+		Data : creditCard, enough
+		Behavior : press, swipe
+
+	Machine:
+		Data : drinkCode, drink
+		Behavior: withdraw
+		
+	CreditCard Machine
+		Data : authroized, yesButton, noButtonm, cancelButton, screen
+		Behavior : show
+
+	CreditCard Company
+		Behavior : authroiz
+
+Sequence of Flow - Invoke Objects with Behaviors
+
+Person r
+Machine soft
+CreditCard Machine cdm
+CreditCard Company visa
+
+r.swipe -> card, creditCardMachine
+visa.authroize -> transaction : authroized
+
+if authroized = true
+	loop
+		soft.show -> screen : "Press DrinkCode"
+		r.press -> drinkcode, machine
+		soft.withdraw -> drink : enough
+		
+		if enough = true
+			r.press -> cancelButton
+			soft.show -> screen : "Thank you"
+			break
+
+		end
+
+	end
+
+else,
+	soft.show -> screen : "Fail to Authorize"
+end
+
+
+
+
+
