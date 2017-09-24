@@ -110,22 +110,14 @@ class DoubleSalary{
 
 class AddDigit{
 	int x;
-	int sum;
 	
 	public void addDigit(){
-        
-		if(x >= 10) {
-			while (x > 0) 
-			{
-				sum = sum + x % 10;
-				x = x / 10;
-			}
-			System.out.println(sum);
-					}
-		else
+		while (x >= 10) 
 		{
-			sum = x;
-			System.out.println(sum);
+			x = x / 10 + x % 10;
+		}
+		System.out.println(x);
+				}
 		}
 	}
 }
@@ -145,7 +137,7 @@ class PerfectNumber {
 		}
 		else {
 			for (a = 1; a < n; a++) {
-				
+				int sum = 0;
 				for (b = 1; b < a; b++) {
 				
 					if (a % b == 0) {
