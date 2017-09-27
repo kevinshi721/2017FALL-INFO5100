@@ -7,6 +7,7 @@ public class Assignment2 {
 	/* Question 1*/
 		
 		DoubleSalary k = new DoubleSalary ();
+		// Would be better if using a constructor to assign value to name and hours.
 		k.name = "K";
 		k.hours = 0;
 		k.calculate ();
@@ -68,9 +69,17 @@ class DoubleSalary{
 	double hours;
 	double salary;
 	
+	// Would recommend against using nested if
+	// rather use 
+	// if <= 0
+	// else if <= 36
+	// else if <= 41
+	// else if <= 48
+	// else
 	public void calculate() {
 		
 		if (hours <= 0) {
+			// name is not initiated.
 			System.out.println (name + ", No Pain, No Pay");	
 		}
 		else {
@@ -111,6 +120,11 @@ class DoubleSalary{
 class AddDigit{
 	int x;
 	
+	// please add constructor like
+	// public AddDigit(int x){
+        //     this.x = x;
+        // }
+	
 	public void addDigit(){
 		while (x >= 10) 
 		{
@@ -129,7 +143,7 @@ class PerfectNumber {
 	int a;
 	int b;
 	int sum;
-	
+	// add constructor
 	public void pnCalc() {
 		
 		if (n <= 1) {
@@ -161,6 +175,8 @@ class PerfectNumber {
 
 class PizzaSelection {
 		
+    // would need a map here to record type and price
+    private static Map<String, int> PIZZA_MENU = ImmutableMap.of("a", 1, "b", 2, "c", 3);
 	String pizzaType;
 	int unitPrice;
 	int pizzaSize;
@@ -169,6 +185,11 @@ class PizzaSelection {
 	PizzaSelection (String pizzaType, int pizzaSize, int pizzaAmount) {
 		System.out.println("New Pizza Ordered");
 	}
+	
+    // get pizza price by type
+    public int getPizzaPrice(String type){
+        return PIZZA_MENU.get(type);
+    }
 }
 
 class PizzaPrice{
@@ -205,6 +226,17 @@ class Customer{
 	int pizzaAmount;
 	
 	//table array? not sure about such data structure
+    // answer: no table structor needed.
+    public Customer(String name, String pizzaType, int pizzaAmount){
+        this.name = name;
+	this.pizzaType = pizzaType;
+	this.pizzaAmount = pizzaAmount;
+    }
+	
+   public static void main(String[] args){
+       Customer kevin = new Customer("kevin", "a", 2);
+       int sum = kevin.pizzaAmount * PizzaSelection.getPizzaPrice(kevin.type);
+   }
 	
 }	
 
