@@ -39,6 +39,8 @@ public class Calculator {
 				if (b == 0) {
 					System.out.println("error");
 				}
+				// Add else here? Otherwise, if b == 0, we will still excute a / b.
+				// Or is it intentional?
 				return a / b;
 		}
 		
