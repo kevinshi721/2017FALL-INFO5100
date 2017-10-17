@@ -3,6 +3,7 @@
 */
 
 class Clock { 
+// Java will have a default constructor with no-argument if you did not define one
 // ERR: no public class in a java file
 
 		String time;
