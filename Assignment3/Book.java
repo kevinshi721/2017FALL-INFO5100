@@ -21,6 +21,7 @@ public class Book {
 		}
 		
 		public Book(int price) {
+		// Duplicated constructor, maybe typo?
 		// duplicated method, change to "public Book(double price) {"，or "public Book(int size, int price)""
 				this.price = price;
 		}
