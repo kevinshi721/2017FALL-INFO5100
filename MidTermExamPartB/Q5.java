@@ -61,7 +61,7 @@ class Solution {
         }
         return new ArrayList<Cell>();
     }
-}
+}  
 
 class Cell{
     int x,y;
