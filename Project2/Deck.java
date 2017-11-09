@@ -10,7 +10,7 @@ public class Deck extends GroupOfCards {
         super(TOTAL_CARDS);
         for (int i = 0; i < 4; i++) {
             for (int j = 2; j < 15; j++) {
-                getCards().add(new Card(j, i));
+                addCard(new Card(j, i));
             }
         }
     }

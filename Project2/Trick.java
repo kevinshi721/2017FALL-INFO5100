@@ -7,7 +7,6 @@ public class Trick extends GroupOfCards {
     private boolean hearts;
     private boolean queen;
 
-
     public Trick(int players) {
         super(players);
     }
@@ -35,6 +34,7 @@ public class Trick extends GroupOfCards {
             winner = playNum;
         } else if (winningCard.getSuit() == card.getSuit()) {
             winningCard = winningCard.getNum() > card.getNum() ? winningCard : card;
+            winner = winningCard.getNum() > card.getNum() ? winner : playNum;
         }
     }
 
